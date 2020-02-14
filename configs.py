@@ -43,6 +43,11 @@ class Config(WXDB):
         data = self.db.get(script)
         return {lang[1]: lang[0] for lang in data}
 
+    def get_outputs(self):
+        """Return list output device names."""
+        # This method need override in command module.
+        pass
+
     def open_settings(self, parent):
         """Open settings dialog."""
         dlg = SettingsDialog(parent, self)
