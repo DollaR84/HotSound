@@ -3,5 +3,6 @@
 *.pyo
 *.pyc
 *.db
+*.json
 cache.dat
 __pycache__/
