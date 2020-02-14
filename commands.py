@@ -13,6 +13,8 @@ import webbrowser
 from dialogs.dialogs import About
 from dialogs.dialogs import Message
 
+from linker import Linker
+
 import version
 
 
@@ -24,6 +26,7 @@ class Commands:
         self.drawer = drawer
         self.phrases = self.drawer.phrases
         self.message = Message(self.drawer)
+        self.linker = Linker()
 
         self.config = self.drawer.config
         self.config.get_outputs = self.get_outputs
