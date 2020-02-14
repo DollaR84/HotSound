@@ -8,8 +8,6 @@ Created on 14.02.2020
 """
 
 import json
-import io
-import wave
 
 
 class Linker:

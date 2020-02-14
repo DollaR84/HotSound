@@ -7,13 +7,14 @@ Created on 12.02.2020
 
 """
 
-import pyaudio
 import webbrowser
 
 from dialogs.dialogs import About
 from dialogs.dialogs import Message
 
 from linker import Linker
+
+from player import Player
 
 import version
 
@@ -27,15 +28,12 @@ class Commands:
         self.phrases = self.drawer.phrases
         self.message = Message(self.drawer)
         self.linker = Linker()
+        self.player = Player()
 
         self.config = self.drawer.config
-        self.config.get_outputs = self.get_outputs
-
-        self.audio = pyaudio.PyAudio()
-        self.devices = []
+        self.config.get_outputs = self.player.get_outputs
 
         self.set_window()
-        self.set_outputs()
 
     def set_window(self):
         """Set size and position window from saving data."""
@@ -66,24 +64,13 @@ class Commands:
         self.config.set_pos(self.drawer.GetScreenPosition())
         self.config.set_size(self.drawer.GetSize())
         self.config.close()
+        self.linker.close()
 
         self.drawer.Destroy()
 
     def options(self, event):
         """Run settings dialog."""
         self.config.open_settings(self.drawer)
-
-    def set_outputs(self):
-        """Set outputs audio devices."""
-        info = self.audio.get_host_api_info_by_index(0)
-        num_devices = info.get('deviceCount')
-        for i in range(num_devices):
-            if self.audio.get_device_info_by_host_api_device_index(0,i).get('maxOutputChannels') > 0:
-                self.devices.append(self.audio.get_device_info_by_host_api_device_index(0, i))
-
-    def get_outputs(self):
-        """Return list all supported output audio devices."""
-        return [device.get('name') for device in self.devices]
 
     def process(self, event):
         """Main process eventer for button."""
