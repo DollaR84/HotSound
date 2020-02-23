@@ -33,6 +33,9 @@ class Commands:
         self.config = self.drawer.config
         self.config.get_outputs = self.player.get_outputs
 
+        self.wildcard = 'Wave files (*.wav)|*.wav|' \
+                        'All files (*.*)|*.*'
+
         self.set_window()
 
     def set_window(self):
@@ -71,6 +74,15 @@ class Commands:
     def options(self, event):
         """Run settings dialog."""
         self.config.open_settings(self.drawer)
+
+    def get_path_file(self):
+        """Return path wave file."""
+        path = ''
+        file_dlg = wx.FileDialog(self.drawer, self.phrases.titles.choice_file, '', '', self.wildcard, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+        if wx.ID_OK == file_dlg.ShowModal():
+            path = file_dlg.GetPath()
+            file_dlg.Destroy()
+        return path
 
     def process(self, event):
         """Main process eventer for button."""
