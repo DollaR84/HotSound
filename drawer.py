@@ -53,18 +53,22 @@ class MainFrame(wx.Frame):
         self.CreateStatusBar()
         self.__create_widgets()
         self.__create_bindings()
+        self.set_values()
 
     def __create_widgets(self):
         """Create widgets program."""
         self.data = wx.TextCtrl(self.panel, wx.ID_ANY, style=wx.TE_MULTILINE | wx.TE_READONLY)
-        self.but_process = wx.Button(self.panel, wx.ID_ANY, self.phrases.widgets.but_process)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.data, 1, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.but_process, 0, wx.EXPAND | wx.ALL, 5)
         self.panel.SetSizer(sizer)
 
     def __create_bindings(self):
         """Create bindings for widgets and other events."""
         self.Bind(wx.EVT_CLOSE, getattr(self.command, 'close_window'))
-        self.Bind(wx.EVT_BUTTON, getattr(self.command, 'process'), self.but_process)
+        self.Bind(wx.EVT_CHAR_HOOK, getattr(self.command, 'process'))
+
+    def set_values(self):
+        """Set values in data widgets on frame."""
+        self.data.SetValue(self.command.linker.get_all_links())
+        self.Layout()
