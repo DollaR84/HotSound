@@ -6,3 +6,4 @@
 *.json
 cache.dat
 __pycache__/
+sounds/
