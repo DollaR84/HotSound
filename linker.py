@@ -7,6 +7,7 @@ Created on 14.02.2020
 
 """
 
+import os
 import json
 
 import wx
@@ -50,5 +51,5 @@ class Linker:
 
     def get_all_links(self):
         """Return all links in string format for view."""
-        links = sorted(['{} - {}'.format(self.__keyMap.get(keycode, chr(int(keycode))), path) for keycode, path in self.__links.items()])
+        links = sorted(['{} - {} ({})'.format(self.__keyMap.get(keycode, chr(int(keycode))), os.path.splitext(os.path.basename(path))[0], path) for keycode, path in self.__links.items()])
         return '\n'.join(links)
