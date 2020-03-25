@@ -18,6 +18,8 @@ from player import Player
 
 import version
 
+import wx
+
 
 class Commands:
     """Helper class, contains command for bind events, menu and buttons."""
@@ -32,9 +34,19 @@ class Commands:
 
         self.config = self.drawer.config
         self.config.get_outputs = self.player.get_outputs
+        self.player.config = self.config
 
         self.wildcard = 'Wave files (*.wav)|*.wav|' \
                         'All files (*.*)|*.*'
+
+        self.__mods = [
+                       wx.WXK_CONTROL,
+                       wx.WXK_SHIFT,
+                       wx.WXK_ALT,
+                       wx.WXK_WINDOWS_LEFT,
+                       wx.WXK_WINDOWS_RIGHT,
+                       wx.WXK_WINDOWS_MENU,
+                      ]
 
         self.set_window()
 
@@ -68,6 +80,7 @@ class Commands:
         self.config.set_size(self.drawer.GetSize())
         self.config.close()
         self.linker.close()
+        self.player.close()
 
         self.drawer.Destroy()
 
@@ -86,4 +99,22 @@ class Commands:
 
     def process(self, event):
         """Main process eventer for button."""
-        pass
+        keycode = event.GetKeyCode()
+
+        if not keycode in self.__mods:
+            if event.CmdDown() and event.ShiftDown():
+                self.linker.del_link(keycode)
+                self.drawer.data.SetValue(self.linker.get_all_links())
+                self.drawer.Layout()
+            elif event.CmdDown():
+                path = self.get_path_file()
+                if path != '':
+                    self.linker.set_link(keycode, path)
+                    self.drawer.data.SetValue(self.linker.get_all_links())
+                    self.drawer.Layout()
+            else:
+                path = self.linker.get_link(keycode)
+                if path is not None:
+                    self.player.play(path)
+
+        event.Skip()
