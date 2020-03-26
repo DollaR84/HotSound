@@ -17,15 +17,15 @@ from Cython.Distutils import build_ext
 ext_modules = [
                Extension("dialogs.dialogs", ["dialogs/dialogs.py"]),
                Extension("dialogs.options", ["dialogs/options.py"]),
-               Extension("api", ["api.py"]),
                Extension("commands", ["commands.py"]),
                Extension("drawer", ["drawer.py"]),
                Extension("menu", ["menu.py"]),
                Extension("configs", ["configs.py"]),
                Extension("database", ["database.py"]),
-               Extension("tree", ["tree.py"]),
                Extension("version", ["version.py"]),
-               Extension("wxdb", ["wxdb.py"])
+               Extension("wxdb", ["wxdb.py"]),
+               Extension("linker", ["linker.py"]),
+               Extension("player", ["player.py"]),
               ]
 
 setup(
