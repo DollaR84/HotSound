@@ -40,7 +40,9 @@ class MainFrame(wx.Frame):
         """Initialization interface."""
         self.config = configs.Config()
         with open('languages.dat', 'rb') as lang_file:
-            self.phrases = configs.load(pickle.load(lang_file)[self.config.general_language])
+            lang_dict = pickle.load(lang_file)
+            self.config.set_languages(lang_dict['languages'])
+            self.phrases = configs.load(lang_dict[self.config.general_language])
         super().__init__(None, wx.ID_ANY, self.phrases.titles.caption)
         self.command = Commands(self)
         self.menu = Menu(self)
