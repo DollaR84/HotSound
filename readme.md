@@ -1,9 +1,9 @@
-# notes
-Notes program on WXWidgets use Tree view
+# hotsound
+HotSound - the program that turns a keyboard into a sound synthesizer.
 
-This program allows you to store notes in a tree structure.
-The program can create notes both for the root of the tree, and for each note, child notes can be created.
-Also implemented is the removal of notes, with the preservation of children if necessary.
-There is some statistical information on the number of notes: in the root, children, as well as everything.
-All notes, as well as program settings, are saved in the database file.
+This program allows you to assign a sound to each key on the keyboard.
+Press any key in combination with Ctrl in order to assign a sound file to the key.
+When you press a key in combination with Ctrl + Shift - you can remove the previously assigned sound from this key from the program base.
+After assigning all the necessary sounds, you can simply press any key to play any previously assigned sound.
 Program management is extremely simple and intuitive.
+The program supports sound files in .wav format.
