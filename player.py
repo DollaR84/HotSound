@@ -7,12 +7,11 @@ Created on 15.02.2020
 
 """
 
+from multiprocessing import Process
+
 import pyaudio
 import time
 import wave
-
-
-wf = None
 
 
 class Player:
@@ -47,24 +46,8 @@ class Player:
 
     def play(self, path):
         """Play wave file from path."""
-        global wf
-        wf = wave.open(path, 'rb')
-
-        stream = self.__audio.open(
-                                   format=self.__audio.get_format_from_width(wf.getsampwidth()),
-                                   channels=wf.getnchannels(),
-                                   rate=wf.getframerate(),
-                                   output_device_index=self.__get_index_device(),
-                                   output=True,
-                                   stream_callback=__callback__)
-
-        stream.start_stream()
-        while stream.is_active():
-            time.sleep(0.1)
-
-        stream.stop_stream()
-        stream.close()
-        wf.close()
+        proc = Process(target=__play__, args=(path, self.__get_index_device()))
+        proc.start()
 
     def __get_index_device(self):
         """Return index device from set config."""
@@ -72,6 +55,28 @@ class Player:
         return self.__devices_indexies[name]
 
 
-def __callback__(in_data, frame_count, time_info, status):
-    data = wf.readframes(frame_count)
-    return (data, pyaudio.paContinue)
+def __play__(path, output_index):
+    """Play wave file in owner process."""
+    audio = pyaudio.PyAudio()
+    wf = wave.open(path, 'rb')
+
+    def __callback__(in_data, frame_count, time_info, status):
+        data = wf.readframes(frame_count)
+        return (data, pyaudio.paContinue)
+
+    stream = audio.open(
+                        format=audio.get_format_from_width(wf.getsampwidth()),
+                        channels=wf.getnchannels(),
+                        rate=wf.getframerate(),
+                        output_device_index=output_index,
+                        output=True,
+                        stream_callback=__callback__)
+
+    stream.start_stream()
+    while stream.is_active():
+        time.sleep(0.1)
+
+    stream.stop_stream()
+    stream.close()
+    wf.close()
+    audio.terminate()
