@@ -1,0 +1,23 @@
+pyinstaller -F --noconsole ^
+--add-binary dialogs/dialogs.pyd;dialogs ^
+--add-binary dialogs/options.pyd;dialogs ^
+--add-binary commands.pyd;. ^
+--add-binary configs.pyd;. ^
+--add-binary database.pyd;. ^
+--add-binary drawer.pyd;. ^
+--add-binary linker.pyd;. ^
+--add-binary menu.pyd;. ^
+--add-binary player.pyd;. ^
+--add-binary version.pyd;. ^
+--add-binary wxdb.pyd;. ^
+--hidden-import wx ^
+--hidden-import pickle ^
+--hidden-import sqlite3 ^
+--hidden-import webbrowser ^
+--hidden-import os ^
+--hidden-import json ^
+--hidden-import multiprocessing ^
+--hidden-import pyaudio ^
+--hidden-import time ^
+--hidden-import wave ^
+main.pyw

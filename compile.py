@@ -15,8 +15,8 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext_modules = [
-               Extension("dialogs", ["dialogs.py"]),
-               Extension("options", ["options.py"]),
+               Extension("dialogs.dialogs", ["dialogs/dialogs.py"]),
+               Extension("dialogs.options", ["dialogs/options.py"]),
                Extension("commands", ["commands.py"]),
                Extension("drawer", ["drawer.py"]),
                Extension("menu", ["menu.py"]),

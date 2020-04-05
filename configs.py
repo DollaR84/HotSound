@@ -7,9 +7,9 @@ Created on 11.02.2020
 
 """
 
-from dialogs import RetCode
+from dialogs.dialogs import RetCode
 
-from options import SettingsDialog
+from dialogs.options import SettingsDialog
 
 from wxdb import WXDB
 
