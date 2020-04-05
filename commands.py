@@ -9,8 +9,8 @@ Created on 12.02.2020
 
 import webbrowser
 
-from dialogs.dialogs import About
-from dialogs.dialogs import Message
+from dialogs import About
+from dialogs import Message
 
 from linker import Linker
 
