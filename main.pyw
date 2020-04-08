@@ -7,6 +7,8 @@ Created on 26.01.2020
 
 """
 
+import multiprocessing
+
 from drawer import Drawer
 
 
@@ -16,4 +18,5 @@ def main():
 
 
 if __name__ == '__main__':
+    multiprocessing.freeze_support()
     main()
